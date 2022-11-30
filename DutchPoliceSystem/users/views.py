@@ -6,6 +6,12 @@ from django.contrib import messages
 from .forms import CreateRegistrationForm
 from django.contrib.auth import authenticate,login,logout
 
+#OTP Import
+import pyotp
+
+#variables declared to be used publicly
+
+totp = pyotp.TOTP('base32secret3232')
 # Create your views here.
 
 def loginPage(request):
@@ -22,8 +28,16 @@ def loginPage(request):
 
         #check if user is in the databse
         if user is not None:
-            login(request,user)
-            return redirect('home')#to be redirected to police dashboard later
+            
+            generatedOTP()
+             #verify generated OTP that has been generated
+            verifyOTP= input("enter OTP:")
+            if totp.verify(verifyOTP)==True:
+                login(request,user)
+                return redirect('home')#to be redirected to police dashboard later
+            else:
+                print("invalid OTP")
+            
         else:
             messages.info(request,'username or password is incorrect, please try again or contact the adminstrator')
 
@@ -58,3 +72,8 @@ def logoutUser(request):
 
 def home(request):
     return render(request,'users/dashboard.html')
+
+#Method to genrate OTP with a timer
+def generatedOTP():
+  #generated 6 digit OTP
+  print("Your OTP is:",totp.now())
