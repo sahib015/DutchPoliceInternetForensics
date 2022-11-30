@@ -4,11 +4,29 @@ from django.http import HttpResponse
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 from .forms import CreateRegistrationForm
+from django.contrib.auth import authenticate,login,logout
 
 # Create your views here.
 
 def loginPage(request):
-    return render(request,'users/login.html')
+   
+    if request.method =="POST":
+        #get username and password values from the login form
+        usernameVal = request.POST.get('username')
+        passwordVal = request.POST.get('password')
+    
+         #authenticate user
+        user =authenticate(request,username=usernameVal,password=passwordVal)
+
+        #check if user is in the databse
+        if user is not None:
+            login(request,user)
+            return redirect('home')#to be redirected to police dashboard later
+        else:
+            messages.info(request,'username or password is incorrect, please try again or contact the adminstrator')
+
+    context={}
+    return render(request,'users/login.html',context)
 
 def registerPage(request):
     regForm = CreateRegistrationForm()
@@ -29,3 +47,6 @@ def registerPage(request):
             return redirect('login') #redirects user to the admin dashboard (to be done later)- temporary redirection to login page
     context = {'form':regForm}
     return render(request,'users/register.html',context)
+
+def home(request):
+    return(request,'users/dashboard.html')
