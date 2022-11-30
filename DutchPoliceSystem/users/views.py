@@ -14,6 +14,8 @@ def loginPage(request):
         #get username and password values from the login form
         usernameVal = request.POST.get('username')
         passwordVal = request.POST.get('password')
+        print("username: "+usernameVal)
+        print("password: "+passwordVal)
     
          #authenticate user
         user =authenticate(request,username=usernameVal,password=passwordVal)
@@ -26,7 +28,7 @@ def loginPage(request):
             messages.info(request,'username or password is incorrect, please try again or contact the adminstrator')
 
     context={}
-    return render(request,'users/login.html',context)
+    return render(request,'users/login.html',context) #renders the login page
 
 def registerPage(request):
     regForm = CreateRegistrationForm()
@@ -46,7 +48,13 @@ def registerPage(request):
 
             return redirect('login') #redirects user to the admin dashboard (to be done later)- temporary redirection to login page
     context = {'form':regForm}
-    return render(request,'users/register.html',context)
+    return render(request,'users/register.html',context)#renders the register page with context details 
+
+#logout user from the system
+def logoutUser(request):
+    logout(request)
+    return redirect('login')
+
 
 def home(request):
-    return(request,'users/dashboard.html')
+    return render(request,'users/dashboard.html')
