@@ -58,7 +58,7 @@
                         <div class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
                     </div>
                     <div class="ms-3">
-                        <h6 class="mb-0">name here/h6>
+                        <h6 class="mb-0">name here</h6>
                         <span>Admin</span>
                     </div>
                 </div>
@@ -176,7 +176,7 @@
                         <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
                             <a href="#" class="dropdown-item">My Profile</a>
                             <a href="#" class="dropdown-item">Settings</a>
-                            <a href="#" class="dropdown-item">Log Out</a>
+                            <a href="{% url 'logout' %" class="dropdown-item">Log Out</a>
                         </div>
                     </div>
                 </div>
@@ -191,7 +191,7 @@
                   <div class="alert alert-{{message.tags}}">{{message}}</div>
                 {% endfor %}
               {% endif %}
-            </div>311
+            </div>
             <div class="container-fluid pt-4 px-4">
                 <div class="row vh-100 bg-light rounded align-items-center justify-content-center mx-0">
                     <div class="col-md-6 text-center">
