@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     #own
-    'users.apps.UsersConfig',
+    'policeUsers.apps.PoliceUsersConfig',
 ]
 
 MIDDLEWARE = [
