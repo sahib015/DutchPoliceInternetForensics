@@ -5,6 +5,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 from .forms import CreateRegistrationForm
 from django.contrib.auth import authenticate,login,logout
+from django.contrib.auth.decorators import login_required
 
 #OTP Import
 import pyotp
@@ -43,7 +44,7 @@ def loginPage(request):
             messages.info(request,'username or password is incorrect, please try again or contact the adminstrator')
 
     context={}
-    return render(request,'users/login.html',context) #renders the login page
+    return render(request,'policeUsers/login.html',context) #renders the login page
 
 def registerPage(request):
     regForm = CreateRegistrationForm()
@@ -63,7 +64,7 @@ def registerPage(request):
 
             return redirect('login') #redirects user to the admin dashboard (to be done later)- temporary redirection to login page
     context = {'form':regForm}
-    return render(request,'users/register.html',context)#renders the register page with context details 
+    return render(request,'policeUsers/register.html',context)#renders the register page with context details 
 
 #logout user from the system
 def logoutUser(request):
@@ -71,8 +72,10 @@ def logoutUser(request):
     return redirect('login')
 
 
+#restrict the police user dashboard
+@login_required(login_url='login')
 def home(request):
-    return render(request,'users/dashboard.html')
+    return render(request,'policeUsers/dashboard.html')
 
 #Method to genrate OTP with a timer
 def generatedOTP():
