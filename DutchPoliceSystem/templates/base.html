@@ -176,7 +176,9 @@
                         <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
                             <a href="#" class="dropdown-item">My Profile</a>
                             <a href="#" class="dropdown-item">Settings</a>
-                            <a href="{% url 'logout' %}" class="dropdown-item">Log Out</a>
+                             <!-- Button trigger modal -->
+                            <a  class="dropdown-item"data-bs-toggle="modal" data-bs-target="#logoutModal">Log Out</a>
+                            <!--<a href="{% url 'logout' %}" class="dropdown-item">Log Out</a>-->
                         </div>
                     </div>
                 </div>
@@ -222,10 +224,35 @@
         </div>
         <!-- Content End -->
 
-
+        <!--Logout Modal-->
+       
+  
+  
         <!-- Back to Top -->
         <!--<a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>-->
     </div>
+
+    <!-- Logout Modal -->
+    
+<div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Logout</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p>{{request.user}}, do you confirm to logout from the system?</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <a href="{%url 'logout' %}" type="button" class="btn btn-primary">Logout</button>
+        </div>
+      </div>
+    </div>
+  </div>
+    <!--end of logout modal-->
+   
 
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>

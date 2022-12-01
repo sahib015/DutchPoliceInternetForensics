@@ -21,8 +21,7 @@ def loginPage(request):
         #get username and password values from the login form
         usernameVal = request.POST.get('username')
         passwordVal = request.POST.get('password')
-        print("username: "+usernameVal)
-        print("password: "+passwordVal)
+    
     
          #authenticate user
         user =authenticate(request,username=usernameVal,password=passwordVal)
@@ -31,8 +30,9 @@ def loginPage(request):
         if user is not None:
             
             generatedOTP()
-             #verify generated OTP that has been generated
-            verifyOTP= input("enter OTP:")
+            #verify generated OTP that has been generated
+            #verifyOTP= input("enter OTP:")
+            verifyOTP= input("Enter OTP: ")
             if totp.verify(verifyOTP)==True:
                 login(request,user)
                 return redirect('home')#to be redirected to police dashboard later
