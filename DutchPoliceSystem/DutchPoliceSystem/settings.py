@@ -11,11 +11,14 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
+# File Storage directory
+FILE_URL = '/file/'
+FILE_ROOT = os.path.join(BASE_DIR, 'file')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
@@ -26,7 +29,7 @@ SECRET_KEY = 'django-insecure-40sn*ujkqg8((a$@i#@2gu#qn&r@1o8!x)px)0^^3ti*hdr0q%
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -40,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     #own
     'policeUsers.apps.PoliceUsersConfig',
+    'DataFiles',
 ]
 
 MIDDLEWARE = [
