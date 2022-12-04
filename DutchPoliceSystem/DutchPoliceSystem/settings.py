@@ -20,6 +20,16 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 FILE_URL = '/file/'
 FILE_ROOT = os.path.join(BASE_DIR, 'file')
 
+# Secret key for file encryption. This should be 16, 24, or 32 bytes long.
+AES_KEY = b'\x1a>\xf8\xcd\xe2\x8e_~V\x14\x98\xc2\x1f\xf9\xea\xf8\xd7c\xb3`!d\xd4\xe3+\xf7Q\x83\xb5~\x8f\xdd'
+
+# Encrypt File Upload Handler
+#FILE_UPLOAD_HANDLERS = [
+#    "encrypted_files.uploadhandler.EncryptedFileUploadHandler",
+#    "django.core.files.uploadhandler.MemoryFileUploadHandler",
+#    "django.core.files.uploadhandler.TemporaryFileUploadHandler"
+#]
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
@@ -41,6 +51,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    #Django Encrypted Files Library
+    #'encrypted_files',
     #own
     'policeUsers.apps.PoliceUsersConfig',
     'DataFiles',
