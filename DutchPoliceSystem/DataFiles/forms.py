@@ -5,4 +5,4 @@ from .models import UploadDataModel
 class UploadDataForm(forms.ModelForm):
     class Meta:
         model = UploadDataModel
-        fields = ('first_name', 'last_name', 'email', 'title', 'file', 'desc')
+        fields = ('first_name', 'last_name', 'email', 'title', 'file', 'description')

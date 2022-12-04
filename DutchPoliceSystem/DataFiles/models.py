@@ -8,7 +8,7 @@ class UploadDataModel(models.Model):
     first_name = models.CharField(max_length = 50, default="")
     last_name = models.CharField(max_length = 50, default="")
     email = models.EmailField(max_length = 80, default="")
-    desc = models.TextField(max_length = 1000, default="")
+    description = models.TextField(max_length = 1000, default="")
 
     class Meta:
         ordering = ['last_name']
