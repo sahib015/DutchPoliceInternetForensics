@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     #own
     'policeUsers.apps.PoliceUsersConfig',
+    'generalUsers.apps.GeneralusersConfig',
     'userNotifications.apps.UserNotificationsConfig', 
 ]
 
