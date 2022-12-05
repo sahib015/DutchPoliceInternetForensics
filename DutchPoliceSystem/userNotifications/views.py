@@ -58,9 +58,9 @@ def createMessage(request):
 #display all messages from user
 def allUserList(request):
     data = CreateNewMessage.objects.all()#select * from createnewmessage
-    decMessage = fernet.decrypt(encMessage).decode()
+    #decMessage = fernet.decrypt(encMessage).decode()
  
-    print("decrypted string: ", decMessage)
+    #print("decrypted string: ", decMessage)
     context={'msgs':data}
     return render(request,'policeUsers/allMessages.html',context)
 
