@@ -31,5 +31,5 @@ class CreateNewMessage(models.Model):
     email = models.CharField(max_length=50)
     content= models.CharField(max_length=100)
     levelOfPriority = models.CharField(max_length=6, choices=priorityLevel)
-    status = models.CharField(max_length=6, choices=status)
+    status = models.CharField(max_length=6, choices=status ,default="open")
 

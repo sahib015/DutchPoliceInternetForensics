@@ -1,6 +1,10 @@
+
 from django.forms import ModelForm
 from django import forms
 from .models import UploadDataModel,CreateNewMessage
+
+
+
 
 class UploadDataForm(forms.ModelForm):
     class Meta:
@@ -10,4 +14,5 @@ class UploadDataForm(forms.ModelForm):
 class CreateNewMessageFrom(forms.ModelForm):
     class Meta:
         model = CreateNewMessage
-        fields = '__all__'
+        fields =('date','name','email','content','levelOfPriority')
+        

@@ -4,13 +4,41 @@
 
 {% block content %}
 <h1>Create Message </h1>
-
-<form method ='post' enctype ="multipart/form-data">
+<div class="col-sm-12 col-xl-6">
+    <div class="bg-light rounded h-100 p-4">
+<form  action="" method="post">
     {% csrf_token %}
-    {{form.as_p}}
-    <input type="submit" value = "Submit">
+    <div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label">Date</label>
+        {{form.date}}
+       
+    </div>
+    <div id="dateHelp" class="form-text">Date format is YYYY/MM/DD
+    </div>
+    <div class="mb-3">
+        <label for="exampleInputPassword1" class="form-label">Name</label>
+        {{form.name}}
+    </div>
+    <div class="mb-3">
+        <label for="exampleInputPassword1" class="form-label">Email</label>
+        {{form.email}}
+    </div>
+    <div class="mb-3">
+        <label for="exampleInputPassword1" class="form-label">Content</label>
+        {{form.content}}
+    </div>
+    <div class="mb-3">
+        <label for="exampleInputPassword1" class="form-label">Level of Priority</label>
+        {{form.levelOfPriority}}
+    </div>
+   
+    
+    <button type="submit" class="btn btn-primary">Send Message</button>
 </form>
 
+
+</div>
+</div>
 
 
 {% endblock %}
