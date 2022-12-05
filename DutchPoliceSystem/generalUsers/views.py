@@ -62,7 +62,7 @@ def registerPage(request):
             #pass messages to the dashboard
             messages.success(request,name+' has successfully been registered and is able to login.')
 
-            return redirect('login') #redirects user to the admin dashboard (to be done later)- temporary redirection to login page
+            return redirect('loginUser') #redirects user to the login page for the user to login
     context = {'form':regForm}
     return render(request,'generalUsers/register.html',context)#renders the register page with context details 
 
