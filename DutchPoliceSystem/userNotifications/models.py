@@ -29,7 +29,7 @@ class CreateNewMessage(models.Model):
     date = models.DateField()
     name= models.CharField(max_length= 45)
     email = models.CharField(max_length=50)
-    content= models.CharField(max_length=100)
+    content= models.TextField(max_length=100)
     levelOfPriority = models.CharField(max_length=6, choices=priorityLevel)
     status = models.CharField(max_length=6, choices=status ,default="open")
 
