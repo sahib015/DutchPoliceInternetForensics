@@ -4,7 +4,7 @@ from .forms import UploadDataForm
 
 # Create your views here.
 
-def DataUploadView(request):
+def createMessage(request):
     if request.method == 'POST':
         form = UploadDataForm(request.POST,request.FILES)
         if form.is_valid():
