@@ -35,7 +35,7 @@ def loginPage(request):
             verifyOTP= input("Enter OTP: ")
             if totp.verify(verifyOTP)==True:
                 login(request,user)
-                return redirect('home')#to be redirected to police dashboard later
+                return redirect('userDash')
             else:
                 messages.warning(request,'Verification of OTP failed.')
                 print("invalid OTP")

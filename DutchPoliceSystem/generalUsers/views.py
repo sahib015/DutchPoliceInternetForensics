@@ -19,8 +19,8 @@ def loginPage(request):
    
     if request.method =="POST":
         #get username and password values from the login form
-        usernameVal = request.POST.get('username')
-        passwordVal = request.POST.get('password')
+        usernameVal = request.POST.get('usernameUser')
+        passwordVal = request.POST.get('passwordUser')
     
     
          #authenticate user
@@ -32,10 +32,10 @@ def loginPage(request):
             generatedOTP()
             #verify generated OTP that has been generated
             #verifyOTP= input("enter OTP:")
-            verifyOTP= input("Enter OTP: ")
-            if totp.verify(verifyOTP)==True:
+            verifyOTPUser= input("Enter OTP: ")
+            if totp.verify(verifyOTPUser)==True:
                 login(request,user)
-                return redirect('home')#to be redirected to police dashboard later
+                return redirect('userDash')#to be redirected to police dashboard later
             else:
                 messages.warning(request,'Verification of OTP failed.')
                 print("invalid OTP")
@@ -73,8 +73,8 @@ def logoutUser(request):
 
 
 #restrict the police user dashboard
-#@login_required(login_url='loginUser')
-def home(request):
+@login_required(login_url='loginUser')
+def userDash(request):
     return render(request,'generalUsers/dashboard.html')
 
 def index(request):
