@@ -5,6 +5,11 @@ from cryptography.fernet import Fernet
 from .forms import UploadDataForm,CreateNewMessageFrom
 from .models import UploadDataModel,CreateNewMessage
 
+# declare private variables
+#generate the key to be used for encryption and decryption
+key = Fernet.generate_key()
+# Instance the Fernet class with the key
+fernet = Fernet(key)
 
 # Create your views here.
 
@@ -30,26 +35,19 @@ def createMessage(request):
         # encryption of the content message below
         contentMsg = request.POST.get('content')
 
-        #generate the key to be used for encryption and decryption
-        key = Fernet.generate_key()
- 
-        # Instance the Fernet class with the key
- 
-        fernet = Fernet(key)
+       
 
-        #encrypt the message
-        encMessage = fernet.encrypt(contentMsg.encode())
 
         #check if the form is valid before saving to the database
         if addMsgForm.is_valid():
              #encrypt the message
             encMessage = fernet.encrypt(contentMsg.encode())
-            addMsgForm.content = encMessage
-            addMsgForm.save('content') #save details to the database
+            
             addMsgForm.save() #save details to the database
+
             print("content: "+contentMsg)
             print(encMessage)
-
+            lastRecord(encMessage) # update content message and store the encoded message in the database
             #pass messages to the dashboard
             messages.success(request,'your message has been recieved and we shall respond within 72 hours')
 
@@ -60,5 +58,14 @@ def createMessage(request):
 #display all messages from user
 def allUserList(request):
     data = CreateNewMessage.objects.all()#select * from createnewmessage
+    decMessage = fernet.decrypt(encMessage).decode()
+ 
+    print("decrypted string: ", decMessage)
     context={'msgs':data}
     return render(request,'policeUsers/allMessages.html',context)
+
+#get last record added to the database
+def lastRecord(encodeMsg):
+    student_obj = CreateNewMessage.objects.get(id=CreateNewMessage.objects.last().id)
+    student_obj.content= encodeMsg
+    student_obj.save()
