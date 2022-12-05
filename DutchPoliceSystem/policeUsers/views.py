@@ -7,6 +7,9 @@ from .forms import CreateRegistrationForm
 from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.decorators import login_required
 
+#import models from other app
+from userNotifications.models import UploadDataModel
+
 #OTP Import
 import pyotp
 
@@ -81,3 +84,6 @@ def home(request):
 def generatedOTP():
   #generated 6 digit OTP
   print("Your OTP is:",totp.now())
+
+
+

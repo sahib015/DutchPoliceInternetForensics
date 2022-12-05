@@ -84,3 +84,4 @@ def index(request):
 def generatedOTP():
   #generated 6 digit OTP
   print("Your OTP is:",totp.now())
+
