@@ -4,6 +4,15 @@
 
 {% block content %}
 <h1>All Messages </h1>
- {{list}}
+
+
+ {% for student in msgs %}
+    {{ student.date}}
+    {{ student.content }}
+    {{ student.status }}
+    
+{% endfor %}
+
+
 
 {% endblock %}

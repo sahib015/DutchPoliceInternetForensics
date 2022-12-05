@@ -37,6 +37,6 @@ def createMessage(request):
 
 #display all messages from user
 def allUserList(request):
-    messageList = CreateNewMessage.objects.all()#select * from createnewmessage
-    context={'list':messageList}
+    data = CreateNewMessage.objects.all()#select * from createnewmessage
+    context={'msgs':data}
     return render(request,'policeUsers/allMessages.html',context)
