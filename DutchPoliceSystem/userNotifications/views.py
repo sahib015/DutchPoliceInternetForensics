@@ -7,7 +7,8 @@ from .models import UploadDataModel,CreateNewMessage
 
 # declare private variables
 #generate the key to be used for encryption and decryption
-key = Fernet.generate_key()
+#key = Fernet.generate_key()
+key = "JlmWZv4MSbQ34Kw26xNlW7iZaqz0U6HOeez_Ucq-ijQ="
 # Instance the Fernet class with the key
 fernet = Fernet(key)
 
@@ -27,6 +28,7 @@ def createMessage(request):
         }
     return render(request, 'datafiles/DataUpload.html', context)
     """
+    print (key)
     addMsgForm = CreateNewMessageFrom()
     #store data into the databse
     if request.method=="POST":
@@ -42,11 +44,14 @@ def createMessage(request):
         if addMsgForm.is_valid():
              #encrypt the message
             encMessage = fernet.encrypt(contentMsg.encode())
-            
+            decMessage = fernet.decrypt(encMessage).decode()
+
             addMsgForm.save() #save details to the database
 
             print("content: "+contentMsg)
+        
             print(encMessage)
+            print(decMessage)
             lastRecord(encMessage) # update content message and store the encoded message in the database
             #pass messages to the dashboard
             messages.success(request,'your message has been recieved and we shall respond within 72 hours')
