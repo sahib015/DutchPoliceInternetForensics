@@ -69,13 +69,16 @@ def registerPage(request):
 #logout user from the system
 def logoutUser(request):
     logout(request)
-    return redirect('login')
+    return redirect('loginUser')
 
 
 #restrict the police user dashboard
-@login_required(login_url='login')
+#@login_required(login_url='loginUser')
 def home(request):
-    return render(request,'policeUsers/dashboard.html')
+    return render(request,'generalUsers/dashboard.html')
+
+def index(request):
+    return render(request,'index.html')
 
 #Method to genrate OTP with a timer
 def generatedOTP():
