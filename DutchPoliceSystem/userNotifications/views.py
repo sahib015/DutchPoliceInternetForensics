@@ -5,6 +5,8 @@ from cryptography.fernet import Fernet
 from .forms import UploadDataForm,CreateNewMessageFrom
 from .models import UploadDataModel,CreateNewMessage
 
+import rsa
+
 # declare private variables
 #generate the key to be used for encryption and decryption
 #key = Fernet.generate_key()
@@ -12,22 +14,12 @@ key = "JlmWZv4MSbQ34Kw26xNlW7iZaqz0U6HOeez_Ucq-ijQ="
 # Instance the Fernet class with the key
 fernet = Fernet(key)
 
+publicKey, privateKey = rsa.newkeys(512)
+
+
 # Create your views here.
 
 def createMessage(request):
-    """
-    if request.method == 'POST':
-        form = UploadDataForm(request.POST,request.FILES)
-        if form.is_valid():
-            form.save()
-            return HttpResponse('The file is uploaded')
-    else:
-        newMsgForm = createNewMessageFrom()
-        context = {
-            'form':newMsgForm,
-        }
-    return render(request, 'datafiles/DataUpload.html', context)
-    """
     print (key)
     addMsgForm = CreateNewMessageFrom()
     #store data into the databse
@@ -43,15 +35,16 @@ def createMessage(request):
         #check if the form is valid before saving to the database
         if addMsgForm.is_valid():
              #encrypt the message
-            encMessage = fernet.encrypt(contentMsg.encode())
-            decMessage = fernet.decrypt(encMessage).decode()
+            encMessage = rsa.encrypt(contentMsg.encode(),publicKey)#fernet.encrypt(contentMsg.encode())
+            decMessage = rsa.decrypt(encMessage, privateKey).decode()
+           
 
             addMsgForm.save() #save details to the database
 
             print("content: "+contentMsg)
         
             print(encMessage)
-            print(decMessage)
+            print("decoded: "+ decMessage)
             lastRecord(encMessage) # update content message and store the encoded message in the database
             #pass messages to the dashboard
             messages.success(request,'your message has been recieved and we shall respond within 72 hours')
@@ -63,9 +56,15 @@ def createMessage(request):
 #display all messages from user
 def allUserList(request):
     data = CreateNewMessage.objects.all()#select * from createnewmessage
-    #decMessage = fernet.decrypt(encMessage).decode()
- 
-    #print("decrypted string: ", decMessage)
+    description = CreateNewMessage.objects.values('content')
+    
+    print("Content from DB: "+str(description))
+
+   # for content in description:
+       # print(content)
+        #decMessage = rsa.decrypt(content, privateKey).decode()
+       # print("decrypted string: ", decMessage)
+       
     context={'msgs':data}
     return render(request,'policeUsers/allMessages.html',context)
 
