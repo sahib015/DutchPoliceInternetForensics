@@ -70,6 +70,6 @@ def allUserList(request):
 
 #get last record added to the database
 def lastRecord(encodeMsg):
-    student_obj = CreateNewMessage.objects.get(id=CreateNewMessage.objects.last().id)
-    student_obj.content= encodeMsg
-    student_obj.save()
+    message_obj = CreateNewMessage.objects.get(id=CreateNewMessage.objects.last().id)
+    message_obj.content= encodeMsg
+    message_obj.save()
