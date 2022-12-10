@@ -1,6 +1,12 @@
 from django.urls import path
-from .import views
+
+# Import varibales from views.py
+from . import views
+
+# Import varibales from other apps
 from userNotifications.views import allUserList
+
+# Define URI pattern
 urlpatterns = [
     path('',views.home,name="policeDash"),
     path('register',views.registerPage,name="registerPolice"),

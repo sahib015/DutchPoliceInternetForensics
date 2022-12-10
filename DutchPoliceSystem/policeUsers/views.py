@@ -3,14 +3,16 @@ from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
-from .forms import CreateRegistrationForm
 from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.decorators import login_required
 
-#import models from other app
+# Import variables from forms.py
+from .forms import CreateRegistrationForm
+
+# Import varibales from other apps
 from userNotifications.models import UploadDataModel
 
-#OTP Import
+# Import One-Time-Password Library
 import pyotp
 
 #variables declared to be used publicly
@@ -18,6 +20,7 @@ import pyotp
 totp = pyotp.TOTP('base32secret3232')
 # Create your views here.
 
+# Define login page function
 def loginPage(request):
    
     if request.method =="POST":
@@ -32,7 +35,9 @@ def loginPage(request):
         #check if user is in the databse
         if user is not None:
             
+            #Generator OTP passcode
             generatedOTP()
+
             #verify generated OTP that has been generated
             #verifyOTP= input("enter OTP:")
             verifyOTP= input("Enter OTP: ")
@@ -47,8 +52,10 @@ def loginPage(request):
             messages.info(request,'username or password is incorrect, please try again or contact the adminstrator')
 
     context={}
-    return render(request,'policeUsers/login.html',context) #renders the login page
+    #renders the login page
+    return render(request,'policeUsers/login.html',context)
 
+# User registration page function
 def registerPage(request):
     regForm = CreateRegistrationForm()
     #store data into the databse
@@ -56,7 +63,9 @@ def registerPage(request):
         regForm= CreateRegistrationForm(request.POST)
         #check if the form is valid before saving to the database
         if regForm.is_valid():
-            regForm.save() #save details to the database
+            #save details to the database
+            regForm.save()
+
             #get first and last name of user registered
             firstName = regForm.cleaned_data.get('first_name')
             lastName = regForm.cleaned_data.get('last_name')
@@ -64,18 +73,20 @@ def registerPage(request):
 
             #pass messages to the dashboard
             messages.success(request,name+' has successfully been registered and is able to login.')
-
-            return redirect('login') #redirects user to the admin dashboard (to be done later)- temporary redirection to login page
+            
+            #redirects user to the admin dashboard (to be done later)- temporary redirection to login page
+            return redirect('login')
     context = {'form':regForm}
-    return render(request,'policeUsers/register.html',context)#renders the register page with context details 
 
-#logout user from the system
+    #renders the register page with context details
+    return render(request,'policeUsers/register.html',context)
+
+#Define logout user function
 def logoutUser(request):
     logout(request)
     return redirect('login')
 
-
-#restrict the police user dashboard
+#Restrict the police user dashboard
 @login_required(login_url='login')
 def home(request):
     return render(request,'policeUsers/dashboard.html')

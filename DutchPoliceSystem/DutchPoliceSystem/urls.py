@@ -16,9 +16,14 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+# Define URI to be access
 urlpatterns = [
+    # Django Administrator portal URI
     path('admin/', admin.site.urls),
+    # Internal User URI and reference with policeUsers.urls file in policeUsers directory
     path('government/',include('policeUsers.urls')),
+    # Notification message URI and reference with userNotifications.urls file in userNotifications directory 
     path('', include('userNotifications.urls')),
+    # General User URI and reference with generalUsers.urls file in generalUsers directory
     path('', include('generalUsers.urls'))
 ]
