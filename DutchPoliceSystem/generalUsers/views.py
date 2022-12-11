@@ -3,9 +3,11 @@ from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
-from .forms import CreateUserForm
 from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.decorators import login_required
+
+# Import variables from forms.py
+from .forms import CreateUserForm
 
 #OTP Import
 import pyotp
@@ -15,37 +17,40 @@ import pyotp
 totp = pyotp.TOTP('base32secret3232')
 # Create your views here.
 
+# General User Login Page Function
 def loginPage(request):
-   
+
     if request.method =="POST":
         #get username and password values from the login form
         usernameVal = request.POST.get('usernameUser')
         passwordVal = request.POST.get('passwordUser')
-    
-    
-         #authenticate user
+
+        #authenticate user
         user =authenticate(request,username=usernameVal,password=passwordVal)
 
         #check if user is in the databse
         if user is not None:
-            
+
             generatedOTP()
             #verify generated OTP that has been generated
             #verifyOTP= input("enter OTP:")
             verifyOTPUser= input("Enter OTP: ")
             if totp.verify(verifyOTPUser)==True:
                 login(request,user)
-                return redirect('userDash')#to be redirected to police dashboard later
+                #to be redirected to police dashboard later
+                return redirect('userDash')
             else:
                 messages.warning(request,'Verification of OTP failed.')
                 print("invalid OTP")
-            
+
         else:
             messages.info(request,'username or password is incorrect, please try again or contact the adminstrator')
 
     context={}
-    return render(request,'generalUsers/login.html',context) #renders the login page
+    #renders the login page
+    return render(request,'generalUsers/login.html',context)
 
+# General User Registration Page
 def registerPage(request):
     regForm = CreateUserForm()
     #store data into the databse
@@ -62,9 +67,12 @@ def registerPage(request):
             #pass messages to the dashboard
             messages.success(request,name+' has successfully been registered and is able to login.')
 
-            return redirect('loginUser') #redirects user to the login page for the user to login
+            #redirects user to the login page for the user to login
+            return redirect('loginUser')
     context = {'form':regForm}
-    return render(request,'generalUsers/register.html',context)#renders the register page with context details 
+
+    ##renders the register page with context details
+    return render(request,'generalUsers/register.html',context)
 
 #logout user from the system
 def logoutUser(request):
@@ -82,6 +90,5 @@ def index(request):
 
 #Method to genrate OTP with a timer
 def generatedOTP():
-  #generated 6 digit OTP
-  print("Your OTP is:",totp.now())
-
+    #generated 6 digit OTP
+    print("Your OTP is:",totp.now())
