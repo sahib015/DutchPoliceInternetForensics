@@ -14,5 +14,4 @@ urlpatterns = [
     path('profile',views.loginPage,name="profile"),
     path('logout',views.logoutUser,name="logout"),
     path('allMessages',allUserList,name="allMessages"),
-   
 ]

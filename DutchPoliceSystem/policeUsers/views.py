@@ -22,19 +22,17 @@ totp = pyotp.TOTP('base32secret3232')
 
 # Define login page function
 def loginPage(request):
-   
     if request.method =="POST":
         #get username and password values from the login form
         usernameVal = request.POST.get('username')
         passwordVal = request.POST.get('password')
-    
-    
+
          #authenticate user
         user =authenticate(request,username=usernameVal,password=passwordVal)
 
         #check if user is in the databse
         if user is not None:
-            
+
             #Generator OTP passcode
             generatedOTP()
 
@@ -47,7 +45,7 @@ def loginPage(request):
             else:
                 messages.warning(request,'Verification of OTP failed.')
                 print("invalid OTP")
-            
+
         else:
             messages.info(request,'username or password is incorrect, please try again or contact the adminstrator')
 
@@ -73,8 +71,9 @@ def registerPage(request):
 
             #pass messages to the dashboard
             messages.success(request,name+' has successfully been registered and is able to login.')
-            
-            #redirects user to the admin dashboard (to be done later)- temporary redirection to login page
+
+            #redirects user to the admin dashboard (to be done later)
+            #- temporary redirection to login page
             return redirect('login')
     context = {'form':regForm}
 
@@ -93,8 +92,5 @@ def home(request):
 
 #Method to genrate OTP with a timer
 def generatedOTP():
-  #generated 6 digit OTP
-  print("Your OTP is:",totp.now())
-
-
-
+    #generated 6 digit OTP
+    print("Your OTP is:",totp.now())
