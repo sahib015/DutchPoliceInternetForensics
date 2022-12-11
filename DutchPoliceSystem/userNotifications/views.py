@@ -1,11 +1,16 @@
 from django.shortcuts import render,redirect
 from django.contrib import messages
 
+# Import encryption library
 from cryptography.fernet import Fernet
-from .forms import UploadDataForm,CreateNewMessageFrom
-from .models import UploadDataModel,CreateNewMessage
 
+# Import RSA public-key cryptosystem library
 import rsa
+# Import variablies from forms.py
+from .forms import CreateNewMessageFrom
+
+# Import variablies from models.py
+from .models import CreateNewMessage
 
 # declare private variables
 #generate the key to be used for encryption and decryption
@@ -14,57 +19,58 @@ key = "JlmWZv4MSbQ34Kw26xNlW7iZaqz0U6HOeez_Ucq-ijQ="
 # Instance the Fernet class with the key
 fernet = Fernet(key)
 
+# Public Key and Private Key generation
 publicKey, privateKey = rsa.newkeys(512)
 
-
 # Create your views here.
-
 def createMessage(request):
     print (key)
     addMsgForm = CreateNewMessageFrom()
     #store data into the databse
     if request.method=="POST":
         addMsgForm= CreateNewMessageFrom(request.POST)
-        
+
         # encryption of the content message below
         contentMsg = request.POST.get('content')
-
-       
-
-
-        #check if the form is valid before saving to the database
         if addMsgForm.is_valid():
-             #encrypt the message
-            encMessage = rsa.encrypt(contentMsg.encode(),publicKey)#fernet.encrypt(contentMsg.encode())
+            #encrypt the message
+            #fernet.encrypt(contentMsg.encode())
+            encMessage = rsa.encrypt(contentMsg.encode(),publicKey)
             decMessage = rsa.decrypt(encMessage, privateKey).decode()
-           
 
-            addMsgForm.save() #save details to the database
+            #save details to the database
+            addMsgForm.save()
 
             print("content: "+contentMsg)
-        
+
             print(encMessage)
             print("decoded: "+ decMessage)
-            lastRecord(encMessage) # update content message and store the encoded message in the database
+
+            # update content message and store the encoded message in the database
+            lastRecord(encMessage)
             #pass messages to the dashboard
             messages.success(request,'your message has been recieved and we shall respond within 72 hours')
 
-            return redirect('userDash') #redirects user to the user dashboard
+            #redirects user to the user dashboard
+            return redirect('userDash')
     context = {'form':addMsgForm}
-    return render(request,'datafiles/DataUpload.html',context)#renders the register page with context details 
+
+    #renders the register page with context details
+    return render(request,'datafiles/DataUpload.html',context)
 
 #display all messages from user
 def allUserList(request):
-    data = CreateNewMessage.objects.all()#select * from createnewmessage
+    #select * from createnewmessage
+    data = CreateNewMessage.objects.all()
     description = CreateNewMessage.objects.values('content')
-    
+
     print("Content from DB: "+str(description))
 
-   # for content in description:
-       # print(content)
-        #decMessage = rsa.decrypt(content, privateKey).decode()
-       # print("decrypted string: ", decMessage)
-       
+    # for content in description:
+    # print(content)
+    # decMessage = rsa.decrypt(content, privateKey).decode()
+    # print("decrypted string: ", decMessage)
+
     context={'msgs':data}
     return render(request,'policeUsers/allMessages.html',context)
 

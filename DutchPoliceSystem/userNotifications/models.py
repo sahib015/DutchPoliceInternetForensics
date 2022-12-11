@@ -1,6 +1,8 @@
 from django.db import models
 
 # Create your models here.
+
+# Define form field variables, type and setting
 class UploadDataModel(models.Model):
 
     title = models.CharField(max_length = 80, default="")
@@ -16,6 +18,8 @@ class UploadDataModel(models.Model):
     def __str__(self):
         return f"{self.last_name}"
 
+# Define message priority value and status value
+# Define message field varibale, type and setting
 class CreateNewMessage(models.Model):
     priorityLevel = (
         ('Low', 'Low'),
@@ -32,4 +36,3 @@ class CreateNewMessage(models.Model):
     content= models.TextField(max_length=100)
     levelOfPriority = models.CharField(max_length=6, choices=priorityLevel)
     status = models.CharField(max_length=6, choices=status ,default="open")
-
