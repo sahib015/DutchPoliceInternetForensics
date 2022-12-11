@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
-import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -38,11 +37,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    
-    # Internet Forensic APPS 
+
+    # Internet Forensic APPS
     'policeUsers.apps.PoliceUsersConfig',
     'generalUsers.apps.GeneralusersConfig',
-    'userNotifications.apps.UserNotificationsConfig', 
+    'userNotifications.apps.UserNotificationsConfig',
 ]
 
 MIDDLEWARE = [
@@ -124,7 +123,6 @@ USE_TZ = True
 STATIC_URL = 'static/'
 STATICFILES_DIRS = [
     BASE_DIR / "static",
- 
 ]
 
 # Default primary key field type
