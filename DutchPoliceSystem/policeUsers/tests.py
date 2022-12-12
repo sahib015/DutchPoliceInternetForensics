@@ -1,6 +1,7 @@
 from django.test import SimpleTestCase
 from django.urls import reverse, resolve
 from policeUsers.views import home, registerPage,loginPage,logoutUser
+from userNotifications.views import allUserList
 
 #Class for Police users to test URLs 
 class TestUrl(SimpleTestCase):
@@ -19,3 +20,7 @@ class TestUrl(SimpleTestCase):
     def test_logoutPolice_url_is_resolved(self):
         url = reverse('logout')
         self.assertEquals(resolve(url).func,logoutUser)
+    
+    def test_allMessages_url_is_resolved(self):
+        url = reverse('allMessages')
+        self.assertEquals(resolve(url).func,allUserList)
