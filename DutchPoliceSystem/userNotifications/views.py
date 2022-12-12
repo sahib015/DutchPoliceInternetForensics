@@ -1,8 +1,6 @@
 from django.shortcuts import render,redirect
 from django.contrib import messages
 
-# Import encryption library
-from cryptography.fernet import Fernet
 
 # Import RSA public-key cryptosystem library
 import rsa
@@ -13,18 +11,14 @@ from .forms import CreateNewMessageFrom
 from .models import CreateNewMessage
 
 # declare private variables
-#generate the key to be used for encryption and decryption
-#key = Fernet.generate_key()
-key = "JlmWZv4MSbQ34Kw26xNlW7iZaqz0U6HOeez_Ucq-ijQ="
-# Instance the Fernet class with the key
-fernet = Fernet(key)
+
 
 # Public Key and Private Key generation
 publicKey, privateKey = rsa.newkeys(512)
 
 # Create your views here.
 def createMessage(request):
-    print (key)
+   
     addMsgForm = CreateNewMessageFrom()
     #store data into the databse
     if request.method=="POST":
@@ -34,8 +28,8 @@ def createMessage(request):
         contentMsg = request.POST.get('content')
         if addMsgForm.is_valid():
             #encrypt the message
-            #fernet.encrypt(contentMsg.encode())
             encMessage = rsa.encrypt(contentMsg.encode(),publicKey)
+
             decMessage = rsa.decrypt(encMessage, privateKey).decode()
 
             #save details to the database
@@ -60,21 +54,16 @@ def createMessage(request):
 
 #display all messages from user
 def allUserList(request):
-    #select * from createnewmessage
-    data = CreateNewMessage.objects.all()
+    
+    data = CreateNewMessage.objects.all() #select * from createnewmessage
     description = CreateNewMessage.objects.values('content')
 
     print("Content from DB: "+str(description))
 
-    # for content in description:
-    # print(content)
-    # decMessage = rsa.decrypt(content, privateKey).decode()
-    # print("decrypted string: ", decMessage)
-
     context={'msgs':data}
-    return render(request,'policeUsers/allMessages.html',context)
+    return render(request,'policeUsers/allMessages.html',context) # pass all messages from the database to the view
 
-#get last record added to the database
+#get last record added to the database and update the last record with the encryption to store in the database
 def lastRecord(encodeMsg):
     message_obj = CreateNewMessage.objects.get(id=CreateNewMessage.objects.last().id)
     message_obj.content= encodeMsg
