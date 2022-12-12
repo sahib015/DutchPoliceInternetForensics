@@ -1,4 +1,5 @@
-from django.test import SimpleTestCase
+from django.test import SimpleTestCase,TestCase,Client
+from django.contrib.auth.models import User
 from django.urls import reverse, resolve
 from generalUsers.views import userDash, registerPage,loginPage,logoutUser, index
 

@@ -15,7 +15,7 @@ class TestUrl(SimpleTestCase):
 
 class TestView(TestCase):
     def setup(self):
-        self.client = Client
+        self.client = Client()
       
 
     def test_createNewMessage_post(self):

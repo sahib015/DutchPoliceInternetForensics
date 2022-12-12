@@ -1,5 +1,6 @@
 from django.test import SimpleTestCase,TestCase,Client
-from django.contrib.auth import get_user
+
+from django.contrib.auth.models import User
 from django.urls import reverse, resolve
 from policeUsers.views import home, registerPage,loginPage,logoutUser
 from userNotifications.views import allUserList
@@ -27,3 +28,23 @@ class TestUrl(SimpleTestCase):
         url = reverse('allMessages')
         self.assertEquals(resolve(url).func,allUserList)
 
+
+class TestView(TestCase):
+    def setUp (self):
+        self.loginPoliceUrl = reverse('login')
+        self.user = User.objects.create_user(
+            username='testUser',
+            email='testUser@test.com',
+            first_name='Test',
+            last_name='User',
+            password='userTest_01'
+        )   
+    def test_policeLogin_success(self):
+       client = Client()
+       response = client.post(self.loginPoliceUrl,{'username':'testUser','password':'userTest_01'},format='text/html')
+       self.assertEqual(response.status_code, 302)
+
+    def test_policeLogin_fail(self):
+       client = Client()
+       response = client.post(self.loginPoliceUrl,{'username':'testUser','password':'userTest_021'},format='text/html')
+       self.assertEqual(response.status_code, 200)
