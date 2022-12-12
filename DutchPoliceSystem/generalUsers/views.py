@@ -18,7 +18,7 @@ totp = pyotp.TOTP('base32secret3232')
 # Create your views here.
 
 # General User Login Page Function
-def loginPage(request):
+def loginPageUser(request):
 
     if request.method =="POST":
         #get username and password values from the login form
@@ -77,7 +77,7 @@ def registerPage(request):
 #logout user from the system
 def logoutUser(request):
     logout(request)
-    return redirect('loginUser')
+    return redirect('index')
 
 
 #restrict the police user dashboard

@@ -83,7 +83,7 @@ def registerPage(request):
 #Define logout user function
 def logoutUser(request):
     logout(request)
-    return redirect('login')
+    return redirect('index')
 
 #Restrict the police user dashboard
 @login_required(login_url='login')

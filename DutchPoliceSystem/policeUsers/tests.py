@@ -39,11 +39,12 @@ class TestView(TestCase):
             last_name='User',
             password='userTest_01'
         )   
+    # test for police login success
     def test_policeLogin_success(self):
        client = Client()
        response = client.post(self.loginPoliceUrl,{'username':'testUser','password':'userTest_01'},format='text/html')
        self.assertEqual(response.status_code, 302)
-
+    # test for police unsuccessful login
     def test_policeLogin_fail(self):
        client = Client()
        response = client.post(self.loginPoliceUrl,{'username':'testUser','password':'userTest_021'},format='text/html')
