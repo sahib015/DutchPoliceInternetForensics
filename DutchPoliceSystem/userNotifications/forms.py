@@ -3,6 +3,10 @@ from django import forms
 # Import variables from models.py
 from .models import UploadDataModel,CreateNewMessage
 
+class DateInput(forms.DateInput):
+    input_type = 'date'
+
+
 # Define upload form fields class
 class UploadDataForm(forms.ModelForm):
     class Meta:
@@ -14,3 +18,6 @@ class CreateNewMessageFrom(forms.ModelForm):
     class Meta:
         model = CreateNewMessage
         fields =('date','name','email','content','levelOfPriority')
+        widgets = {
+            'date': DateInput(),
+        }

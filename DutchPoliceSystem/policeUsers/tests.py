@@ -28,8 +28,8 @@ class TestUrl(SimpleTestCase):
         url = reverse('allMessages')
         self.assertEquals(resolve(url).func,allUserList)
 
-
-class TestView(TestCase):
+# test login functionality
+class LoginTest(TestCase):
     def setUp (self):
         self.loginPoliceUrl = reverse('login')
         self.user = User.objects.create_user(

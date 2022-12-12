@@ -22,8 +22,9 @@ class TestUrl(SimpleTestCase):
     def test_logoutUser_url_is_resolved(self):
         url = reverse('logoutUser')
         self.assertEquals(resolve(url).func,logoutUser)
-   
-class TestView(TestCase):
+
+# test login functionality
+class LoginTest(TestCase):
     def setUp (self):
         self.loginUserUrl = reverse('loginUser')
         self.user = User.objects.create_user(
@@ -44,3 +45,4 @@ class TestView(TestCase):
        client = Client()
        response = client.post(self.loginUserUrl,{'usernameUser':'testUser','passwordUser':'userTest_021'},format='text/html')
        self.assertEqual(response.status_code, 200)
+
