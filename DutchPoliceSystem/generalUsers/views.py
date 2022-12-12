@@ -18,27 +18,28 @@ totp = pyotp.TOTP('base32secret3232')
 # Create your views here.
 
 # General User Login Page Function
-def loginPageUser(request):
+def loginPage(request):
 
     if request.method =="POST":
         #get username and password values from the login form
         usernameVal = request.POST.get('usernameUser')
         passwordVal = request.POST.get('passwordUser')
 
-        #authenticate user
+         #authenticate user
         user =authenticate(request,username=usernameVal,password=passwordVal)
 
         #check if user is in the databse
         if user is not None:
 
+            #Generator OTP passcode
             generatedOTP()
+
             #verify generated OTP that has been generated
-            
-            verifyOTPUser= input("Enter OTP: ")
-            if totp.verify(verifyOTPUser)==True:
+           
+            verifyOTP= input("Enter OTP: ")
+            if totp.verify(verifyOTP)==True:
                 login(request,user)
-                
-                return redirect('userDash')#redirected to general user dashboard
+                return redirect('userDash') # redirects to the User Dashboard after sucesssful OTP Verification
             else:
                 messages.warning(request,'Verification of OTP failed.')
                 print("invalid OTP")
