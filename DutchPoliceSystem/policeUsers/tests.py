@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.urls import reverse, resolve
 from policeUsers.views import home, registerPage,loginPage,logoutUser
 from userNotifications.views import allUserList
+from .forms import CreateRegistrationForm
 
 #Class for Police users to test URLs 
 class TestUrl(SimpleTestCase):
@@ -49,3 +50,31 @@ class LoginTest(TestCase):
        client = Client()
        response = client.post(self.loginPoliceUrl,{'username':'testUser','password':'userTest_021'},format='text/html')
        self.assertEqual(response.status_code, 200)
+
+class TestForms(TestCase):
+    def setUp(self):
+        self.form_test_valid_data={
+            'username':'policeTestUser',
+            'first_name': 'police',
+            'last_name':'test',
+            'email': 'policetest@test.com',
+            'password1': 'test_pol@123',
+            'password2':'test_pol@123'
+        }
+        self.form_test_invalid_data={
+            'username':'user3',
+            'first_name': 'user',
+            'last_name':'3',
+            'email': 'user3@test.com',
+            'password1': 'donkey123',
+            'password2':'donkey@123'
+        }
+    #test for valid data in the form
+    def test_createPoliceUser_valid(self):
+        regForm= CreateRegistrationForm(data=self.form_test_valid_data)
+        self.assertTrue(regForm.is_valid())
+
+    #test for invalid data in the form
+    def test_createPoliceUser_invalid(self):
+        regForm= CreateRegistrationForm(data=self.form_test_invalid_data)
+        self.assertFalse(regForm.is_valid())
