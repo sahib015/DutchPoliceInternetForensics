@@ -13,3 +13,31 @@ class TestUrl(SimpleTestCase):
         self.assertEquals(resolve(url).func,createMessage)
 
 
+class TestForms(TestCase):
+    def setUp(self):
+        #dummy test values for valid data
+        self.form_test_valid_data= {
+            'date':'12/12/2022',
+            'name': 'user1',
+            'email': 'user1@test.com',
+            'content': 'This is a test message for testing purposes',
+            'levelOfPriority':'Low'
+        }
+        #dummy test values for invalid data
+        self.form_test_invalid_data= {
+            'date':'12/12/2022',
+            'name': 'user1',
+            'email': 'user1@test.com',
+            'content': 'This is a test message for testing purposes',
+            'levelOfPriority':'low'
+        }
+    #test for valid data in the form
+    def test_createMessage_valid(self):
+        newForm= CreateNewMessageFrom(data=self.form_test_valid_data)
+        self.assertTrue(newForm.is_valid())
+    #test for invalid data in the form
+    def test_createMessage_invalid(self):
+        newForm= CreateNewMessageFrom(data=self.form_test_invalid_data)
+      
+        self.assertFalse(newForm.is_valid())
+        
