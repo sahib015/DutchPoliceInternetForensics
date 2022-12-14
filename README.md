@@ -16,7 +16,7 @@
     * Type “Scripts\activate” - Windows
 ### Still using the terminal, navigate to the location of the Django Project and start Python –cd project/DutchPoliceSystem
     * Type “python manage.py runserver” 
-    * Type “python3 manage.py runserver” ** if having multiple versions of python
+    * Type “python3 manage.py runserver” if having multiple versions of python
 
 ### Once Python is running, using your preferred browser, navigate to URL – https://localhost:8000
 
