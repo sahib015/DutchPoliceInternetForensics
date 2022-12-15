@@ -78,7 +78,7 @@
 ### By implementing the stated libraries, data compliance for standards such as GDPR are met. User data is protected through encryption, MFA and hashing, and through the use of permissions to ensure users have access only to resources they are entitled to.
 
 ## References:
-    * Kablian (2022) How to encrypt and decrypt strings in python?, GeeksforGeeks. Available at: https://www.geeksforgeeks.org/how-to-encryptand-decrypt-strings-in-python/ [Accessed: December 8, 2022].
-    * Pyauth (2021) Pyauth/pyotp: Python one-time password library, GitHub. Available at: https://github.com/pyauth/pyotp [Accessed: December 8, 2022]. 
+    * Kablian (2022) How to encrypt and decrypt strings in python?, GeeksforGeeks. Available from: https://www.geeksforgeeks.org/how-to-encryptand-decrypt-strings-in-python/ [Accessed: December 8, 2022].
+    * Pyauth (2021) Pyauth/pyotp: Python one-time password library, GitHub. Available from: https://github.com/pyauth/pyotp [Accessed: December 8, 2022]. 
 
 
